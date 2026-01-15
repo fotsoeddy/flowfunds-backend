@@ -26,12 +26,21 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
 
-        # Create initial account
+        # Create initial account (MoMo/OM based on number)
         Account.objects.create(
             user=user,
             name="My Account",
             number=user.phone_number,
-            type='momo', # Default to MoMo as per requirements or inference
+            type='momo', # Default to MoMo, user can update later or we can detect
             balance=initial_amount
+        )
+
+        # Create default Cash account
+        Account.objects.create(
+            user=user,
+            name="Cash Account",
+            number=user.phone_number, # Cash account still needs a number reference usually, or can be distinct. Reusing phone for now.
+            type='cash',
+            balance=0
         )
         return user
