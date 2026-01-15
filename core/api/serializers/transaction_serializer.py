@@ -3,12 +3,13 @@ from django.db import transaction
 from core.models import Transaction, Account
 
 class TransactionSerializer(serializers.ModelSerializer):
+    account_name = serializers.ReadOnlyField(source='account.name')
     account_id = serializers.UUIDField(write_only=True)
     
     class Meta:
         model = Transaction
-        fields = ('id', 'type', 'amount', 'category', 'reason', 'date', 'account', 'account_id')
-        read_only_fields = ('id', 'account')
+        fields = ('id', 'type', 'amount', 'reason', 'date', 'account', 'account_id', 'account_name')
+        read_only_fields = ('id', 'account', 'account_name')
 
     def validate(self, attrs):
         user = self.context['request'].user
