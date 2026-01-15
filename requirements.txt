@@ -11,3 +11,5 @@ pip-chill==1.0.3
 platformdirs==4.2.2
 tomli==2.0.1
 psycopg2-binary==2.9.6
+gunicorn
+
