@@ -3,13 +3,13 @@ from .models import User, Account, Transaction
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('phone_number', 'first_name', 'last_name', 'is_staff', 'is_active', 'created_at')
+    list_display = ('phone_number', 'first_name', 'last_name', 'is_staff', 'is_active', 'created')
     search_fields = ('phone_number', 'first_name', 'last_name')
     list_filter = ('is_staff', 'is_active')
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('name', 'number', 'type', 'balance', 'currency', 'user', 'created_at')
+    list_display = ('name', 'number', 'type', 'balance', 'currency', 'user', 'created')
     search_fields = ('name', 'number', 'user__phone_number')
     list_filter = ('type', 'currency')
 
