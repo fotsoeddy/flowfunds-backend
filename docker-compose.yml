@@ -2,10 +2,10 @@ services:
   web:
     build: .
     container_name: flowfunds-web
-    command: sh /app/scripts/entrypoint.sh gunicorn nitypulse_backend.wsgi:application --bind 0.0.0.0:8000 --timeout 120
+    command: sh /app/scripts/entrypoint.sh gunicorn flowfunds_back.wsgi:application --bind 0.0.0.0:8000 --timeout 120
     volumes:
-    - /opt/nity-pulse/staticfiles:/app/staticfiles
-    - /opt/nity-pulse/media:/app/media
+    - /opt/flowfunds/staticfiles:/app/staticfiles
+    - /opt/flowfunds/media:/app/media
 
     ports:
       - "8007:8000"

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e  # Exit immediately if a command exits with a non-zero status
-export DJANGO_SETTINGS_MODULE=nitypulse_backend.settings
+export DJANGO_SETTINGS_MODULE=flowfunds_back.settings
 
 echo "📡 Waiting for the database to be ready..."
 sleep 5
