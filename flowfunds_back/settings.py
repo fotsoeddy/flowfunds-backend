@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-bdf2poi!46+n3!%y99kcfr336dgihu7&2(+saz5m2*6v!a6_w1
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=['127.0.0.1', 'localhost'], cast=list)
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
