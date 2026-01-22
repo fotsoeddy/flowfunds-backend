@@ -2,6 +2,7 @@ from django.urls import path
 from core.api.views.auth_view import RegisterView, CustomTokenObtainPairView, UserDetailView
 from core.api.views.account_view import AccountListCreateView, AccountDetailView
 from core.api.views.transaction_view import TransactionListCreateView, DashboardSummaryView
+from core.api.views.ai_view import ai_chat
 from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
@@ -20,4 +21,7 @@ urlpatterns = [
 
     # Dashboard
     path('dashboard/summary/', DashboardSummaryView.as_view(), name='dashboard-summary'),
+    
+    # AI Assistant
+    path('ai/chat/', ai_chat, name='ai-chat'),
 ]
