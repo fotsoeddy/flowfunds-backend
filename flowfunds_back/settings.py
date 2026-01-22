@@ -95,13 +95,22 @@ import dj_database_url
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': dj_database_url.parse(
+#         config('DATABASE_URL', default='postgresql://flowfunds_0ymm_user:9G5V7L1m2eJokxl5nI5V0UNgGug5kQJn@dpg-d5l5fcm3jp1c7393056g-a.virginia-postgres.render.com/flowfunds_0ymm'),
+#         conn_max_age=600
+#     )
+# }
 DATABASES = {
-    'default': dj_database_url.parse(
-        config('DATABASE_URL', default='postgresql://flowfunds_0ymm_user:9G5V7L1m2eJokxl5nI5V0UNgGug5kQJn@dpg-d5l5fcm3jp1c7393056g-a.virginia-postgres.render.com/flowfunds_0ymm'),
-        conn_max_age=600
-    )
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": config("DB_NAME"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST", default="localhost"),
+        "PORT": config("DB_PORT", default="5432"),
+    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
