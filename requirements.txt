@@ -16,3 +16,4 @@ psycopg2-binary==2.9.11
 python-decouple==3.8
 tomli==2.0.1
 whitenoise==6.11.0
+gunicorn
