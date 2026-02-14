@@ -16,6 +16,10 @@ python manage.py collectstatic --noinput --clear
 
 # echo "✅ Translation Compilation Complete"
 
+echo "🕒 Starting Cron Service..."
+service cron start
+python manage.py crontab add
+
 # 🚀 Execute the container command (gunicorn, celery, etc.)
 echo "🚀 Starting: $@"
 exec "$@"

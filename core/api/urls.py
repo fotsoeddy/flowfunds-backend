@@ -1,9 +1,15 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from core.api.views.auth_view import RegisterView, CustomTokenObtainPairView, UserDetailView
 from core.api.views.account_view import AccountListCreateView, AccountDetailView
 from core.api.views.transaction_view import TransactionListCreateView, DashboardSummaryView
+from core.api.views.extras_view import BudgetLimitViewSet, PushSubscriptionViewSet
 from core.api.views.ai_view import ai_chat
 from rest_framework_simplejwt.views import TokenRefreshView
+
+router = DefaultRouter()
+router.register(r'budget-limits', BudgetLimitViewSet, basename='budget-limit')
+router.register(r'push-subscriptions', PushSubscriptionViewSet, basename='push-subscription')
 
 urlpatterns = [
     # Auth
@@ -24,4 +30,7 @@ urlpatterns = [
     
     # AI Assistant
     path('ai/chat/', ai_chat, name='ai-chat'),
+
+    # Extras (Budget & Push)
+    path('', include(router.urls)),
 ]

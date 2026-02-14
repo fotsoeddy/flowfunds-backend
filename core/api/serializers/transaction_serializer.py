@@ -2,6 +2,7 @@ from decimal import Decimal
 from rest_framework import serializers
 from django.db import transaction
 from core.models import Transaction, Account
+from core.utils.ai_helper import categorize_transaction
 
 class TransactionSerializer(serializers.ModelSerializer):
     account_name = serializers.ReadOnlyField(source='account.name')
@@ -9,7 +10,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Transaction
-        fields = ('id', 'type', 'amount', 'reason', 'date', 'account', 'account_id', 'account_name')
+        fields = ('id', 'type', 'amount', 'reason', 'category', 'date', 'account', 'account_id', 'account_name')
         read_only_fields = ('id', 'account', 'account_name')
 
     def validate(self, attrs):
@@ -35,6 +36,10 @@ class TransactionSerializer(serializers.ModelSerializer):
         
         validated_data.pop('account_id') # Remove from data meant for model
         validated_data['user'] = self.context['request'].user
+
+        # AI Categorization if not provided
+        if not validated_data.get('category') and validated_data.get('reason'):
+            validated_data['category'] = categorize_transaction(validated_data['reason'])
 
         with transaction.atomic():
             ticket = Transaction.objects.create(**validated_data)

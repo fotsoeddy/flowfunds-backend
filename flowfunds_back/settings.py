@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_spectacular',
     'corsheaders',
+    'django_crontab',
     'core',
 ]
 
@@ -251,3 +252,9 @@ LOGGING = {
         },
     },
 }
+
+CRONJOBS = [
+    ('0 8 * * *', 'django.core.management.call_command', ['send_reminders', '--type=morning']),
+    ('0 20 * * *', 'django.core.management.call_command', ['send_reminders', '--type=evening']),
+    ('* * * * *', 'django.core.management.call_command', ['send_reminders', '--type=test']),
+]
