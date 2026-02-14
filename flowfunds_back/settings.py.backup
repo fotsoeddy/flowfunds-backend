@@ -256,5 +256,5 @@ LOGGING = {
 CRONJOBS = [
     ('0 8 * * *', 'django.core.management.call_command', ['send_reminders', '--type=morning']),
     ('0 20 * * *', 'django.core.management.call_command', ['send_reminders', '--type=evening']),
-    # ('* * * * *', 'django.core.management.call_command', ['send_reminders', '--type=test']),  # Disabled - was causing timeouts
+    ('* * * * *', 'django.core.management.call_command', ['send_reminders', '--type=test']),
 ]
