@@ -1,3 +1,4 @@
+from decimal import Decimal
 from rest_framework import serializers
 from django.db import transaction
 from core.models import Transaction, Account
@@ -40,8 +41,22 @@ class TransactionSerializer(serializers.ModelSerializer):
             
             if trans_type == 'income':
                 account.balance += amount
-            elif trans_type in ['expense', 'save']:
+            elif trans_type == 'expense':
                 account.balance -= amount
+            elif trans_type == 'save':
+                account.balance -= amount
+                # Find or create a savings account for the user
+                savings_account, created = Account.objects.get_or_create(
+                    user=self.context['request'].user,
+                    type='savings',
+                    defaults={
+                        'name': 'Main Savings',
+                        'number': f'SAV-{self.context["request"].user.phone_number[-4:]}',
+                        'currency': account.currency
+                    }
+                )
+                savings_account.balance += Decimal(str(amount))
+                savings_account.save()
             
             account.save()
             return ticket
